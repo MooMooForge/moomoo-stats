@@ -1,13 +1,18 @@
 const getServerData = require("./getServerData")
-
+/**
+ * 
+ * @param {String} type 
+ * @param {Number} region 
+ * @param {Number} index 
+ * @returns Server info
+ */
 async function requestServerStats(type, region, index) {
     switch (true) {
         case !type:
             // overall server stats
             return await getServerData(false)
-            
-        case type && !region:
-            // type specific info (e.g. sandbox, dev, normal)
+
+        case type && !region: {
             switch (type) {
                 case "":
                 case "normal":
@@ -18,51 +23,39 @@ async function requestServerStats(type, region, index) {
 
                 case "dev":
                     return await getServerData("dev");
+
                 default:
                     return {}
             }
-        case type && region && !index:
-            // region info
-            switch (type) {
-                case "":
-                case "normal":
-                    // normal server info
-                    break;
+        }
+        case type && region && !index: {
 
-                case "sandbox":
-                    // sandbox info
-                    break;
+            let serverInfo = await requestServerStats(type);
+            let targetServers = [];
+            for (let i = 0; i < serverInfo.length; i++) {
+                let server = serverInfo[i];
 
-                case "dev":
-                    // dev info
-                    break;
-                default:
-                    return {}
+                let serverRegion = server.region.match(/vultr:(\d+)/)[1]
+
+                if (serverRegion == region) {
+                    targetServers.push(server)
+                }
             }
-            break;
-
-        case type && region && index:
-            // server of a type and region
-            switch (type) {
-                case "":
-                case "normal":
-                    // normal server info
-                    break;
-
-                case "sandbox":
-                    // sandbox info
-                    break;
-
-                case "dev":
-                    // dev info
-                    break;
-                default:
-                    return {}
-            }
-            break;
-
+            return targetServers
+        }
+        
         default:
-            // invalid
+            if (type && region && index) {
+                let serverStats = await requestServerStats(type, region)
+                let targetServer = null;
+
+                serverStats.forEach(function (server) {
+                    if (server.index == index) {
+                        targetServer = server;
+                    }
+                })
+                return targetServer
+            }
             return {}
     }
 }

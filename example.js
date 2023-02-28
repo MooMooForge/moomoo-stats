@@ -1,7 +1,7 @@
 const MooMooStats = require("./src/stats");
 
 (async() => {
-    let data = await MooMooStats("normal")
-    console.log(data)
+    let data = await MooMooStats("sandbox", 39)
+      console.log(data)
 })()
 

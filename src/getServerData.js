@@ -1,5 +1,9 @@
 const axios = require("axios");
-
+/**
+ * 
+ * @param {String} type 
+ * @returns ServerInfo
+ */
 async function getServerData(type) {
     return new Promise(async (resolve, reject) => {
         switch (type) {
@@ -7,7 +11,7 @@ async function getServerData(type) {
             case "normal": {
                 let rawdata = await axios.get("https://moomoo.io/serverdata")
                 if (rawdata.status == 200) {
-                    resolve(rawdata.data);
+                    resolve(rawdata.data.servers);
                 } else {
                     reject(rawdata.status)
                 }
@@ -19,7 +23,7 @@ async function getServerData(type) {
                 // sandbox info
                 let rawdata = await axios.get("https://sandbox.moomoo.io/serverData");
                 if (rawdata.status == 200) {
-                    resolve(rawdata.data);
+                    resolve(rawdata.data.servers);
                 } else {
                     reject(rawdata.status)
                 }
@@ -30,7 +34,7 @@ async function getServerData(type) {
                 // dev info
                 let rawdata = await axios.get("https://dev.moomoo.io/serverData");
                 if (rawdata.status == 200) {
-                    resolve(rawdata.data);
+                    resolve(rawdata.data.servers);
                 } else {
                     reject(rawdata.status)
                 }
@@ -45,7 +49,6 @@ async function getServerData(type) {
                     sandbox: sandboxdata.data.servers,
                     dev: devdata.data.servers
                 }
-                console.log("done!")
                 return resolve(servers)
             }
         }
