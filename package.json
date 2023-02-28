@@ -4,7 +4,7 @@
   },
   "name": "moomoo-stats",
   "description": "a NPM package to request MooMoo.io Server stats",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./src/stats.js",
   "scripts": {
     "start": "nodemon ./example.js"
