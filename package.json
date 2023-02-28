@@ -1,5 +1,24 @@
 {
   "dependencies": {
-    "axios": "^1.3.4"
-  }
+    "axios": "^1.3.4",
+    "nodemon": "^2.0.20"
+  },
+  "name": "moomoo-stats",
+  "description": "a NPM package to request MooMoo.io Server stats",
+  "version": "1.0.0",
+  "main": "./src/stats.js",
+  "scripts": {
+    "start": "nodemon ./example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MooMooForge/moomoo-stats.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MooMooForge/moomoo-stats/issues"
+  },
+  "homepage": "https://github.com/MooMooForge/moomoo-stats#readme"
 }
